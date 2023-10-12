@@ -2,22 +2,25 @@ pipeline {
     agent any
 
     stages {
-        stage('Checkout Code') {
+        stage('Build') {
             steps {
-                // Checkout your code from a Git repository if needed
+                // Define the steps to build your project here
+                sh 'echo "Building the project"'
             }
         }
-        stage('Run Ansible Playbook') {
+
+        stage('Test') {
             steps {
-                script {
-                    ansiblePlaybook(
-                        playbook: 'install_mongodb.yml',
-                        inventory: 'localhost,',
-                        installation: 'Default'
-                    )
-                }
+                // Define the steps to run tests here
+                sh 'echo "Running tests"'
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                // Define the steps to deploy your project here
+                sh 'echo "Deploying the project"'
             }
         }
     }
 }
-

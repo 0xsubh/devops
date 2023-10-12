@@ -4,11 +4,7 @@
   tasks:
     
 
-    - name: Add MongoDB tap to Homebrew
-      command: brew tap mongodb/brew
-      when: not ('mongodb/brew' is in brew.tap_list)
-      environment:
-        PATH: "{{ ansible_env.PATH }}"
+    
 
     - name: Install MongoDB
       command: brew install mongodb/brew/mongodb-community@4.4

@@ -1,10 +1,7 @@
 pipeline {
     agent any
 
-    environment {
-        // Define your GitHub credentials
-        GITHUB_CREDENTIALS = credentials('YOUR_GITHUB_CREDENTIALS_ID')
-    }
+    
 
     stages {
         stage('Checkout Code') {

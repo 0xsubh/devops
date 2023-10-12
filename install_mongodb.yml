@@ -2,14 +2,7 @@
   hosts: localhost
 
   tasks:
-    - name: Install Homebrew (if not installed)
-      become: yes
-      command: /bin/bash -c "curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh | /bin/bash"
-      args:
-        creates: /usr/local/bin/brew
-      when: not ('/usr/local/bin/brew' is exists)
-      environment:
-        PATH: "{{ ansible_env.PATH }}"
+    
 
     - name: Add MongoDB tap to Homebrew
       command: brew tap mongodb/brew

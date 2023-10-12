@@ -1,13 +1,11 @@
 pipeline {
     agent any
 
-    
-
     stages {
         stage('Checkout Code') {
             steps {
-                // Check out your code from a Git repository
-                git(url: 'https://github.com/0xsubh/devops.git', branch: 'main', credentials: GITHUB_CREDENTIALS)
+                // Check out your code from a Git repository without credentials
+                git(url: 'https://github.com/0xsubh/devops.git', branch: 'main')
             }
         }
         stage('Install MongoDB') {

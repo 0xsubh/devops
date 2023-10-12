@@ -20,4 +20,15 @@ https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
 
     - name: Start MongoDB service
       command: brew services start mongodb/brew/mongodb-community
+    - name: Check if MongoDB is installed
+      command: mongod --version
+      ignore_errors: yes
+      register: mongodb_check
+
+    - name: Print MongoDB Version
+      debug:
+      var: mongodb_check.stdout
+      when: mongodb_check.rc == 0
+
+    
 

@@ -8,6 +8,14 @@ pipeline {
                 git(url: 'https://github.com/0xsubh/devops.git', branch: 'main')
             }
         }
+        stage('List Contents') {
+            steps {
+                script {
+                    // List the contents of the 'devops' directory to confirm the presence of the playbook
+                    sh 'ls -la devops'
+                }
+            }
+        }
         stage('Install MongoDB') {
             steps {
                 script {

@@ -1,11 +1,10 @@
-
 - name: Install MongoDB on macOS
   hosts: localhost
   become: yes
   tasks:
     - name: Install Homebrew (if not installed)
-      command: /bin/bash -c "$(curl -fsSL 
-https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+      shell:
+        cmd: /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
       args:
         creates: /usr/local/bin/brew
       when: not ('/usr/local/bin/brew' is exists)
@@ -15,11 +14,12 @@ https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
       when: not ('mongodb/brew' is in brew.tap_list)
 
     - name: Install MongoDB
-      command: brew install mongodb-community@4.4
+      command: brew install mongodb/brew/mongodb-community@4.4
       when: not ('mongodb-community' is in brew.list)
 
     - name: Start MongoDB service
       command: brew services start mongodb/brew/mongodb-community
+
     - name: Check if MongoDB is installed
       command: mongod --version
       ignore_errors: yes
@@ -27,8 +27,5 @@ https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
 
     - name: Print MongoDB Version
       debug:
-      var: mongodb_check.stdout
+        var: mongodb_check.stdout
       when: mongodb_check.rc == 0
-
-    
-

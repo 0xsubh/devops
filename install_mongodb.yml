@@ -3,8 +3,7 @@
   become: yes
   tasks:
     - name: Install Homebrew (if not installed)
-      shell:
-        cmd: /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+      command: /bin/bash -c "curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh | /bin/bash"
       args:
         creates: /usr/local/bin/brew
       when: not ('/usr/local/bin/brew' is exists)

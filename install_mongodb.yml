@@ -1,20 +1,24 @@
 ---
 - name: Install MongoDB on macOS
   hosts: localhost
+  gather_facts: no  # Skip gathering facts to avoid the Python interpreter warning
+
   tasks:
     - name: Install Homebrew (if not installed)
-      command: /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+      shell: /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
       args:
         creates: /usr/local/bin/brew
       when: not ('/usr/local/bin/brew' is exists)
 
     - name: Add MongoDB tap to Homebrew
-      command: brew tap mongodb/brew
+      shell: brew tap mongodb/brew
+      args:
+        creates: /usr/local/Homebrew/Library/Taps/mongodb/homebrew-brew
       when: not ('mongodb/brew' is in brew.tap_list)
 
     - name: Install MongoDB
-      command: brew install mongodb/brew/mongodb-community@4.4
+      shell: brew install mongodb/brew/mongodb-community@4.4
       when: not ('mongodb-community' is in brew.list)
 
     - name: Start MongoDB service
-      command: brew services start mongodb/brew/mongodb-community
+      shell: brew services start mongodb/brew/mongodb-community

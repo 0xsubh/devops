@@ -1,4 +1,4 @@
----
+
 - name: Install MongoDB on macOS
   hosts: localhost
   become: yes

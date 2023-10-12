@@ -1,36 +1,20 @@
+---
 - name: Install MongoDB on macOS
   hosts: localhost
   tasks:
-    - name: Import the public key used by the package management system
-      command: sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10
-      become: yes
-      become_user: root
+    - name: Install Homebrew (if not installed)
+      command: /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+      args:
+        creates: /usr/local/bin/brew
+      when: not ('/usr/local/bin/brew' is exists)
 
-    - name: Add MongoDB repository
-      command: echo "deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen" | sudo tee /etc/apt/sources.list.d/mongodb.list
-      become: yes
-      become_user: root
-
-    - name: Update apt cache
-      apt:
-        update_cache: yes
-      become: yes
-      become_user: root
+    - name: Add MongoDB tap to Homebrew
+      command: brew tap mongodb/brew
+      when: not ('mongodb/brew' is in brew.tap_list)
 
     - name: Install MongoDB
-      apt:
-        name: mongodb-org
-        state: latest
-      become: yes
-      become_user: root
-      update_cache: yes
-      notify:
-        - Start MongoDB
+      command: brew install mongodb/brew/mongodb-community@4.4
+      when: not ('mongodb-community' is in brew.list)
 
-  handlers:
-    - name: Start MongoDB
-      service:
-        name: mongod
-        state: started
-      become: yes
-      become_user: root
+    - name: Start MongoDB service
+      command: brew services start mongodb/brew/mongodb-community

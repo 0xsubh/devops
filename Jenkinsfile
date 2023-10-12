@@ -11,8 +11,11 @@ pipeline {
         stage('Install MongoDB') {
             steps {
                 script {
-                    // Run the Ansible playbook to install MongoDB
-                    sh '/opt/homebrew/bin/ansible-playbook -i localhost, -c local devops/install_mongodb.yml'
+                    // Change to the directory where your playbook is located
+                    dir('devops') {
+                        // Run the Ansible playbook to install MongoDB
+                        sh '/opt/homebrew/bin/ansible-playbook -i localhost, -c local install_mongodb.yml'
+                    }
                 }
             }
         }

@@ -12,7 +12,7 @@ pipeline {
             steps {
                 script {
                     // Run the Ansible playbook to install MongoDB
-                    sh '/opt/homebrew/bin/ansible-playbook -i localhost, -c local /path/to/install_mongodb.yml'
+                    sh '/opt/homebrew/bin/ansible-playbook -i localhost, -c local devops/install_mongodb.yml'
                 }
             }
         }

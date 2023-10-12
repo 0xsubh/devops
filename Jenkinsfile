@@ -2,24 +2,30 @@ pipeline {
     agent any
 
     stages {
-        stage('Build') {
+        stage('Checkout Code') {
             steps {
-                // Define the steps to build your project here
-                sh 'echo "Building the project"'
+                // Check out your code from a Git repository
+                git(url: 'https://github.com/0xsubh/devops.git', branch: 'main', credentialsId: 'YOUR_CREDENTIALS_ID')
             }
         }
-
-        stage('Test') {
+        stage('Install MongoDB') {
             steps {
-                // Define the steps to run tests here
-                sh 'echo "Running tests"'
+                script {
+                    // Run the Ansible playbook to install MongoDB
+                    sh 'ansible-playbook -i localhost, -c local install_mongodb.yml'
+                }
             }
         }
-
-        stage('Deploy') {
+        stage('Check MongoDB Installation') {
             steps {
-                // Define the steps to deploy your project here
-                sh 'echo "Deploying the project"'
+                script {
+                    def result = sh(script: 'mongod --version', returnStatus: true)
+                    if (result == 0) {
+                        echo "MongoDB is installed."
+                    } else {
+                        error "MongoDB is not installed."
+                    }
+                }
             }
         }
     }

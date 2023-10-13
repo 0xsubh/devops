@@ -4,32 +4,31 @@ pipeline {
     stages {
         stage('Checkout Code') {
             steps {
-                git(url: 'https://github.com/0xsubh/devops.git', branch: 'main')
+                git(
+                    url: 'https://github.com/your/repo.git',
+                    branch: 'main',
+                    credentialsId: 'your_credentials'
+                )
             }
         }
-        stage('Install MongoDB') {
+        stage('Install Nginx') {
             steps {
                 script {
-                    // Use expect to provide the password to sudo
+                    // Run the Ansible playbook to install Nginx
                     sh '''
-                        /usr/bin/expect <<EOD
-                        spawn sudo /opt/homebrew/bin/ansible-playbook -i localhost, -c local install_mongodb.yml -u subhamsharma --become --become-user=root
-                        expect "Password:"
-                        send "subham\r"
-                        expect eof
-                        EOD
+                        ansible-playbook -i localhost, -c local install_mongodb.yml
                     '''
                 }
             }
         }
-        stage('Check MongoDB Installation') {
+        stage('Check Nginx Installation') {
             steps {
                 script {
-                    def result = sh(script: 'mongod --version', returnStatus: true)
+                    def result = sh(script: 'nginx -v', returnStatus: true)
                     if (result == 0) {
-                        echo "MongoDB is installed."
+                        echo "Nginx is installed."
                     } else {
-                        error "MongoDB is not installed."
+                        error "Nginx is not installed."
                     }
                 }
             }

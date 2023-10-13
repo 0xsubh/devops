@@ -1,24 +1,21 @@
 ---
-- name: Install MongoDB on macOS
+- name: Install Nginx on localhost
   hosts: localhost
-  gather_facts: no  # Skip gathering facts to avoid the Python interpreter warning
-
+  become: yes
   tasks:
-    - name: Install Homebrew (if not installed)
-      shell: sudo /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
-      args:
-        creates: /usr/local/bin/brew
-      when: not ('/usr/local/bin/brew' is exists)
+    - name: Update package cache
+      apt:
+        update_cache: yes
+      when: ansible_os_family == 'Debian'
 
-    - name: Add MongoDB tap to Homebrew
-      shell: brew tap mongodb/brew
-      args:
-        creates: /usr/local/Homebrew/Library/Taps/mongodb/homebrew-brew
-      when: not ('mongodb/brew' is in brew.tap_list)
+    - name: Install Nginx
+      apt:
+        name: nginx
+        state: latest
+      when: ansible_os_family == 'Debian'
 
-    - name: Install MongoDB
-      shell: brew install mongodb/brew/mongodb-community@4.4
-      when: not ('mongodb-community' is in brew.list)
-
-    - name: Start MongoDB service
-      shell: brew services start mongodb/brew/mongodb-community
+    - name: Start Nginx service
+      service:
+        name: nginx
+        state: started
+      when: ansible_os_family == 'Debian'

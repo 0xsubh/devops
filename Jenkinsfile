@@ -1,4 +1,4 @@
-]pipeline {
+pipeline {
     agent any
 
     stages {
@@ -10,11 +10,14 @@
         stage('Install MongoDB') {
             steps {
                 script {
-                    def sudoPassword = 'subham'  // Replace with your actual password
-
-                    // Use echo to send the password to sudo
+                    // Use expect to provide the password to sudo
                     sh '''
-                        echo "subham" | sudo -S /opt/homebrew/bin/ansible-playbook -i localhost, -c local install_mongodb.yml -u subhamsharma --become --become-user=root
+                        /usr/bin/expect <<EOD
+                        spawn sudo /opt/homebrew/bin/ansible-playbook -i localhost, -c local install_mongodb.yml -u subhamsharma --become --become-user=root
+                        expect "Password:"
+                        send "subham\r"
+                        expect eof
+                        EOD
                     '''
                 }
             }

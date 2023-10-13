@@ -11,7 +11,7 @@ pipeline {
             steps {
                 script {
                     sh '''
-                        /opt/homebrew/bin/ansible-playbook -i localhost, -c local install_mongodb.yml
+                        sudo /opt/homebrew/bin/ansible-playbook -i localhost, -c local install_mongodb.yml
                         -u subhamsharma
                         --become
                         --become-user=root

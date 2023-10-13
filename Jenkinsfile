@@ -15,7 +15,7 @@ pipeline {
                 script {
                     // Run the Ansible playbook to install Nginx
                     sh '''
-                        /opt/homebrew/bin/ansible-playbook -i localhost, -c local nginx-install.yml
+                        /opt/homebrew/bin/ansible-playbook -i localhost, -c local install_mongodb.yml
                     '''
                 }
             }

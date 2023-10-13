@@ -1,7 +1,6 @@
 ---
 - name: Install Nginx on localhost (macOS)
   hosts: localhost
-  become: yes
   tasks:
     - name: Install Homebrew (if not already installed)
       command: /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"

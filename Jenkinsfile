@@ -5,8 +5,8 @@ pipeline {
         stage('Checkout Code') {
             steps {
                 git(
-                    url: 'https://github.com/0xsubh/devops.git', branch: 'main'
-                    
+                    url: 'https://github.com/0xsubh/devops.git',
+                    branch: 'main'
                 )
             }
         }
@@ -15,7 +15,7 @@ pipeline {
                 script {
                     // Run the Ansible playbook to install Nginx
                     sh '''
-                        ansible-playbook -i localhost, -c local install_mongodb.yml
+                        /opt/homebrew/bin/ansible-playbook -i localhost, -c local nginx-install.yml
                     '''
                 }
             }

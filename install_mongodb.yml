@@ -5,7 +5,7 @@
 
   tasks:
     - name: Install Homebrew (if not installed)
-      shell: /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+      shell: sudo /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
       args:
         creates: /usr/local/bin/brew
       when: not ('/usr/local/bin/brew' is exists)

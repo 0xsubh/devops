@@ -11,8 +11,8 @@ pipeline {
         stage('Install MongoDB') {
             steps {
                 script {
-                    // Run the Ansible playbook to install MongoDB from the same directory as the pipeline script
-                    sh '/opt/homebrew/bin/ansible-playbook -i localhost, -c local ./install_mongodb.yml'
+                    // Run the Ansible playbook to install MongoDB with sudo permissions
+                    sh '/opt/homebrew/bin/ansible-playbook -i localhost, -c local install_mongodb.yml -u subhamsharma --become --become-user=root'
                 }
             }
         }
@@ -30,3 +30,4 @@ pipeline {
         }
     }
 }
+s

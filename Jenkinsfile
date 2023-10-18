@@ -23,7 +23,8 @@ pipeline {
         stage('Check Nginx Installation') {
             steps {
                 script {
-                    def result = sh(script: 'nginx -v', returnStatus: true)
+                    def result = sh(script: '/usr/local/nginx/sbin/nginx -v', returnStatus: true)
+
                     if (result == 0) {
                         echo "Nginx is installed."
                     } else {

@@ -5,7 +5,7 @@
   become_user: subhamsharma
   become_method: sudo
   become_flags: -H  # Add this line to preserve environment variables
-    PATH: "/usr/local/bin:/usr/bin:/bin"
+      PATH: "/usr/local/bin:/usr/bin:/bin"
 
   tasks:
     

@@ -4,7 +4,7 @@
   connection: local # Use become to run commands with elevated privileges
 
   tasks:
-    - name: Install Nginx
+    - name: /opt/homebrew/bin/brew install nginx
       command: brew install nginx
       args:
         creates: /usr/local/opt/nginx/bin/nginx

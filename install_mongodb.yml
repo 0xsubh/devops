@@ -3,7 +3,8 @@
   hosts: localhost
   become: yes
   become_user: subhamsharma
-  become_method: sudo  # You can specify "sudo" as the method
+  become_method: sudo
+  become_flags: -H  # Add this line to preserve environment variables
 
   tasks:
     - name: Update Homebrew

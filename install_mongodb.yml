@@ -4,13 +4,9 @@
 
   tasks:
     - name: Ensure Nginx is installed
-      command: install nginx
+      command: brew install nginx
       changed_when: "'No available formula' not in ansible_previous_result.stderr"
 
     - name: Start Nginx service
-      command: services start nginx
-      when: "'nginx' not in ansible_previous_result.stdout"
-
-    - name: Enable Nginx to start at boot
-      command: sudo brew services start nginx
+      command: brew services start nginx
       when: "'nginx' not in ansible_previous_result.stdout"

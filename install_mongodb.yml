@@ -1,12 +1,6 @@
 ---
 - name: Set up webserver on macOS
   hosts: localhost
-  become: yes
-  become_user: subhamsharma
-  become_method: sudo
-  become_flags: -H  # Add this line to preserve environment variables
-  environment:
-    PATH: "/usr/local/bin:/usr/bin:/bin"
 
   tasks:
     - name: Ensure Nginx is installed

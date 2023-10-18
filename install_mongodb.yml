@@ -11,6 +11,6 @@
       register: nginx_install
 
     - name: Start Nginx service
-      command: brew services start nginx
+      command: /opt/homebrew/bin/brew services start nginx
       when: nginx_install is changed
 

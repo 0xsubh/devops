@@ -4,8 +4,8 @@
 
   tasks:
     - name: Ensure Nginx is installed
-      command: brew install nginx
-      changed_when: "'No available formula' not in ansible_previous_result.stderr"
+      command: brew list | grep -q 'nginx' || brew install nginx
+      changed_when: false
 
     - name: Start Nginx service
       command: brew services start nginx

@@ -1,13 +1,21 @@
---- 
-- name: set up webserver
+---
+- name: Set up webserver on macOS
   hosts: localhost
-  tasks: 
-    - name: ensure nginx is at the latest version
-      apt:
-        name: nginx
-        state: latest
-    - name: start nginx
-      service: 
-        name: nginx
-        state: started
-        enabled: yes  # if you want to also enable nginx
+  become: yes  # Use become to execute commands with elevated privileges (sudo)
+
+  tasks:
+    - name: Update Homebrew
+      command: brew update
+      changed_when: false  # This task always reports as changed, set to false to avoid unnecessary changes
+
+    - name: Ensure Nginx is installed
+      command: brew install nginx
+      changed_when: "'No available formula' not in ansible_previous_result.stderr"  # Check if Nginx is already installed
+
+    - name: Start Nginx service
+      command: brew services start nginx
+      when: "'nginx' not in ansible_previous_result.stdout"
+
+    - name: Enable Nginx to start at boot
+      command: sudo brew services start nginx
+      when: "'nginx' not in ansible_previous_result.stdout"

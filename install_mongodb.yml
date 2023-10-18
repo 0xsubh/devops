@@ -5,11 +5,10 @@
   become_user: subhamsharma
   become_method: sudo
   become_flags: -H  # Add this line to preserve environment variables
-      PATH: "/usr/local/bin:/usr/bin:/bin"
+  environment:
+    PATH: "/usr/local/bin:/usr/bin:/bin"
 
   tasks:
-    
-
     - name: Ensure Nginx is installed
       command: brew install nginx
       changed_when: "'No available formula' not in ansible_previous_result.stderr"

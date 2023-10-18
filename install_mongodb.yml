@@ -1,16 +1,18 @@
 ---
 - name: Set up webserver on macOS
   hosts: localhost
-  become: yes  # Use become to execute commands with elevated privileges (sudo)
+  become: yes
+  become_user: subham
+  become_method: sudo  # You can specify "sudo" as the method
 
   tasks:
     - name: Update Homebrew
       command: brew update
-      changed_when: false  # This task always reports as changed, set to false to avoid unnecessary changes
+      changed_when: false
 
     - name: Ensure Nginx is installed
       command: brew install nginx
-      changed_when: "'No available formula' not in ansible_previous_result.stderr"  # Check if Nginx is already installed
+      changed_when: "'No available formula' not in ansible_previous_result.stderr"
 
     - name: Start Nginx service
       command: brew services start nginx

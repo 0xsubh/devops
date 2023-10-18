@@ -1,12 +1,23 @@
 ---
-- name: Set up webserver on macOS
+- name: Install Nginx on macOS
   hosts: localhost
+  connection: local # Use become to run commands with elevated privileges
 
   tasks:
-    - name: Ensure Nginx is installed
-      command: brew list | grep -q 'nginx' || brew install nginx
-      changed_when: false
+    - name: Update Homebrew
+      command: brew update
+      changed_when: false  # This task always reports as changed, set to false to avoid unnecessary changes
+
+    - name: Install Nginx
+      command: brew install nginx
+      args:
+        creates: /usr/local/opt/nginx/bin/nginx
+      register: nginx_install
 
     - name: Start Nginx service
       command: brew services start nginx
-      when: "'nginx' not in ansible_previous_result.stdout"
+      when: nginx_install is changed
+
+    - name: Enable Nginx to start at boot
+      command: sudo brew services start nginx
+      when: nginx_install is changed

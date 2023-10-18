@@ -6,11 +6,9 @@
   tasks:
     - name: Install Nginx
       command: /opt/homebrew/bin/brew install nginx
-      args:
-        creates: /usr/local/opt/nginx/bin/nginx
-      register: nginx_install
+      
 
     - name: Start Nginx service
       command: /opt/homebrew/bin/brew services start nginx
-      when: nginx_install is changed
+      
 

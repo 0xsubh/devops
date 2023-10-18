@@ -4,9 +4,6 @@
   connection: local # Use become to run commands with elevated privileges
 
   tasks:
-    - name: Update Homebrew
-      command: brew update
-
     - name: Install Nginx
       command: brew install nginx
       args:

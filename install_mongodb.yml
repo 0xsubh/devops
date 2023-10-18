@@ -5,11 +5,10 @@
   become_user: subhamsharma
   become_method: sudo
   become_flags: -H  # Add this line to preserve environment variables
+    PATH: "/usr/local/bin:/usr/bin:/bin"
 
   tasks:
-    - name: Update Homebrew
-      command: brew update
-      changed_when: false
+    
 
     - name: Ensure Nginx is installed
       command: brew install nginx

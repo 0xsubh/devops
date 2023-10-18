@@ -1,19 +1,13 @@
----
-- name: Install Nginx on localhost (macOS)
-  hosts: localhost
-  tasks:
-    - name: Install Homebrew (if not already installed)
-      command: /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-      args:
-        creates: /usr/local/bin/brew
-      when: ansible_os_family == 'Darwin'
-
-    - name: Install Nginx via Homebrew
-      homebrew:
+--- 
+- name: set up webserver
+  hosts: all
+  tasks: 
+    - name: ensure nginx is at the latest version
+      apt:
         name: nginx
-        state: present
-      when: ansible_os_family == 'Darwin'
-
-    - name: Start Nginx service
-      command: brew services start nginx
-      when: ansible_os_family == 'Darwin'
+        state: latest
+    - name: start nginx
+      service: 
+        name: nginx
+        state: started
+        enabled: yes  # if you want to also enable nginx
